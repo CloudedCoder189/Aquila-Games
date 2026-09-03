@@ -44,6 +44,11 @@ main { width: min(100% - 32px, 1040px); margin: 0 auto; padding: 68px 0 54px; }
 .coming-soon { margin: 25px 0 0; color: var(--muted); font-size: 0.88rem; text-align: center; }
 footer { width: min(100% - 32px, 1120px); margin: 0 auto; padding: 21px 0 25px; display: flex; justify-content: space-between; gap: 20px; border-top: 1px solid var(--line); color: var(--muted); font-size: 0.74rem; letter-spacing: 0.05em; }
 footer span:first-child { color: var(--navy); font-weight: 800; }
+.embed-page, .embed-page body { min-height: 0; background: transparent; }
+.embed-page .masthead, .embed-page footer { display: none; }
+.embed-page main { width: min(100% - 24px, 1040px); padding: 8px 0 20px; }
+.embed-page .intro { margin-bottom: 28px; }
+.embed-page .intro h1 { font-size: clamp(2.3rem, 7vw, 3.8rem); }
 
 @media (max-width: 700px) {
   .masthead-inner { min-height: 58px; }
