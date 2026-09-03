@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Aquila Word Search with fresh themed puzzles for the UPA community.">
+    <title>Aquila Word Search | The Aquila</title>
+    <link rel="stylesheet" href="./styles.css?v=1">
+  </head>
+  <body>
+    <main class="game-shell">
+      <header class="masthead">
+        <div class="masthead-inner">
+          <div class="brand-lockup" aria-label="Fun and Games">
+            <span class="brand-section">FUN &amp; GAMES</span>
+          </div>
+          <button class="icon-button" id="help-button" type="button" aria-label="How to play">?</button>
+        </div>
+      </header>
+
+      <section class="game-area" aria-labelledby="game-title">
+        <div class="title-row">
+          <div class="title-block">
+            <p class="edition-label">FRESH PUZZLE <span aria-hidden="true">•</span> <span id="theme-label">LOADING</span></p>
+            <h1 id="game-title">Aquila Word Search</h1>
+          </div>
+          <button class="inline-help" id="embed-help-button" type="button" aria-label="How to play">?</button>
+        </div>
+
+        <div class="difficulty-tabs" role="group" aria-label="Puzzle difficulty">
+          <button type="button" data-difficulty="easy">Easy</button>
+          <button type="button" data-difficulty="medium">Medium</button>
+          <button type="button" data-difficulty="hard">Hard</button>
+        </div>
+
+        <div class="game-status" aria-label="Game status">
+          <span id="difficulty-label">Medium</span>
+          <span class="status-divider" aria-hidden="true"></span>
+          <span id="timer">00:00</span>
+          <span class="status-divider" aria-hidden="true"></span>
+          <span id="found-count">0 of 10 found</span>
+          <button class="new-puzzle-button" id="new-puzzle-button" type="button">New puzzle</button>
+        </div>
+
+        <div class="puzzle-layout">
+          <div class="board" id="board" role="grid" aria-label="Word search board"></div>
+          <aside class="word-panel" aria-labelledby="word-list-title">
+            <div class="word-panel-heading">
+              <div>
+                <p>THEME</p>
+                <h2 id="word-list-title"></h2>
+              </div>
+              <span id="panel-progress"></span>
+            </div>
+            <div class="word-list" id="word-list"></div>
+          </aside>
+        </div>
+      </section>
+
+      <footer class="site-footer">
+        <span>Made for the UPA community</span>
+        <span>Find every hidden word</span>
+      </footer>
+    </main>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+    <dialog class="modal" id="help-dialog">
+      <button class="modal-close" type="button" aria-label="Close">×</button>
+      <h2>How to play</h2>
+      <div class="help-copy">
+        <p>Find every word listed beside the grid.</p>
+        <p>Drag from the first letter to the last letter. Words may run horizontally, vertically, or diagonally.</p>
+        <p>Medium and Hard puzzles use more directions. Hard words may also be written backward.</p>
+        <p>Choose a difficulty or select <strong>New puzzle</strong> whenever you want a different theme and grid.</p>
+      </div>
+    </dialog>
+
+    <dialog class="modal result-dialog" id="result-dialog">
+      <button class="modal-close" type="button" aria-label="Close">×</button>
+      <div class="result-mark" aria-hidden="true">✓</div>
+      <p class="result-kicker" id="result-kicker"></p>
+      <h2>All words found</h2>
+      <p class="modal-subtitle">Nice searching.</p>
+      <div class="result-stats">
+        <div><strong id="result-time"></strong><span>Time</span></div>
+        <div><strong id="result-difficulty"></strong><span>Difficulty</span></div>
+      </div>
+      <button class="action-button" id="play-again-button" type="button">New puzzle</button>
+    </dialog>
+
+    <script src="./game.js?v=1"></script>
+  </body>
+</html>
