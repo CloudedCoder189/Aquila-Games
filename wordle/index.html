@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="The Aquila's daily five-letter word game for the UPA community.">
+    <title>Aquila Wordle | The Aquila</title>
+    <link rel="stylesheet" href="./styles.css?v=7">
+  </head>
+  <body>
+    <main class="game-shell">
+      <header class="masthead">
+        <div class="masthead-inner">
+          <div class="brand-lockup" aria-label="The Aquila Fun and Games">
+            <span class="brand-name">THE AQUILA</span>
+            <span class="brand-divider" aria-hidden="true"></span>
+            <span class="brand-section">FUN &amp; GAMES</span>
+          </div>
+          <button class="icon-button" id="help-button" type="button" aria-label="How to play">?</button>
+        </div>
+      </header>
+
+      <section class="game-area" aria-labelledby="game-title">
+        <div class="title-block">
+          <p class="edition-label">DAILY PUZZLE <span aria-hidden="true">•</span> <span id="puzzle-number"></span></p>
+          <h1 id="game-title">Aquila Wordle</h1>
+          <p>A new word every day</p>
+        </div>
+
+        <div class="board" id="board" aria-label="Word guessing board" aria-live="polite"></div>
+        <div class="keyboard" id="keyboard" aria-label="On-screen keyboard"></div>
+        <button class="view-result" id="view-result" type="button" hidden>View your result</button>
+      </section>
+
+      <footer class="site-footer">
+        <span>Made for the UPA community</span>
+        <span id="footer-puzzle"></span>
+      </footer>
+    </main>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+    <dialog class="modal" id="help-dialog">
+      <button class="modal-close" type="button" aria-label="Close">×</button>
+      <h2>How to play</h2>
+      <p class="modal-subtitle">Guess the five-letter word in six tries.</p>
+      <div class="help-copy">
+        <p>Each guess must be five letters. The color of the tiles changes to show how close your guess was.</p>
+        <div class="example-row" aria-label="P is in the correct position">
+          <span class="example-tile correct">P</span><span class="example-tile">L</span><span class="example-tile">A</span><span class="example-tile">Y</span><span class="example-tile">S</span>
+        </div>
+        <p><strong>P</strong> is in the word and in the correct spot.</p>
+        <div class="example-row" aria-label="R is in the word but in the wrong position">
+          <span class="example-tile">G</span><span class="example-tile present">R</span><span class="example-tile">A</span><span class="example-tile">D</span><span class="example-tile">E</span>
+        </div>
+        <p><strong>R</strong> is in the word but in the wrong spot.</p>
+        <div class="example-row" aria-label="N is not in the word">
+          <span class="example-tile">S</span><span class="example-tile">T</span><span class="example-tile absent">N</span><span class="example-tile">D</span><span class="example-tile">S</span>
+        </div>
+        <p><strong>N</strong> is not in the word.</p>
+      </div>
+    </dialog>
+
+    <dialog class="modal result-dialog" id="result-dialog">
+      <button class="modal-close" type="button" aria-label="Close">×</button>
+      <div class="result-header">
+        <span class="result-kicker" id="result-kicker"></span>
+        <h2 id="result-title"></h2>
+        <p class="modal-subtitle" id="result-description"></p>
+      </div>
+      <div class="mini-grid" id="mini-grid" aria-label="Your results"></div>
+      <div class="result-actions">
+        <button class="action-button share-button" id="share-button" type="button">Share results</button>
+      </div>
+    </dialog>
+
+    <script src="./game.js?v=7"></script>
+  </body>
+</html>
