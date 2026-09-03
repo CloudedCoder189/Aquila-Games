@@ -146,6 +146,14 @@ function submitGuess() {
     return
   }
 
+  if (!window.VALID_WORDS.has(game.current)) {
+    const activeRow = board.querySelector(`[data-row="${game.guesses.length}"]`)
+    activeRow.classList.add("shake")
+    setTimeout(() => activeRow.classList.remove("shake"), 420)
+    showToast("Not in word list")
+    return
+  }
+
   game.guesses.push(game.current)
   game.won = game.current === answer
   game.finished = game.won || game.guesses.length === rows
