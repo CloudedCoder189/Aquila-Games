@@ -91,9 +91,6 @@ button { font: inherit; }
 .mini-grid { display: grid; gap: 4px; justify-content: center; margin: 8px auto 24px; }
 .mini-row { display: flex; gap: 4px; }
 .mini-tile { width: 22px; height: 22px; border-radius: 2px; }
-.result-actions { display: flex; justify-content: center; }
-.action-button { width: min(100%, 260px); height: 45px; border-radius: 6px; font-weight: 700; cursor: pointer; }
-.share-button { border: 1px solid var(--primary); background: var(--primary); color: #fff; }
 .toast { position: fixed; z-index: 20; top: 18px; left: 50%; transform: translate(-50%, -12px); padding: 10px 16px; border-radius: 6px; background: #202321; color: #fff; font-size: 0.88rem; opacity: 0; pointer-events: none; transition: opacity 160ms ease, transform 160ms ease; }
 .toast.show { opacity: 1; transform: translate(-50%, 0); }
 
