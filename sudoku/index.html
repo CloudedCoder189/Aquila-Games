@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="The Aquila's daily Sudoku game for the UPA community.">
     <title>Aquila Sudoku | The Aquila</title>
-    <link rel="stylesheet" href="./styles.css?v=4">
+    <link rel="stylesheet" href="./styles.css?v=5">
   </head>
   <body>
     <main class="game-shell">
@@ -52,6 +52,10 @@
             <span class="tool-icon erase-icon" aria-hidden="true">⌫</span>
             <span>Erase</span>
           </button>
+          <button class="tool-button" id="clear-board-button" type="button">
+            <span class="tool-icon" aria-hidden="true">↺</span>
+            <span>Clear</span>
+          </button>
           <button class="tool-button" id="notes-button" type="button" aria-pressed="false">
             <span class="tool-icon notes-icon" aria-hidden="true">✎</span>
             <span>Notes</span>
@@ -64,7 +68,6 @@
         </div>
 
         <div class="number-pad" id="number-pad" aria-label="Number pad"></div>
-        <button class="clear-board" id="clear-board-button" type="button">Clear all entries</button>
         <button class="view-result" id="view-result" type="button" hidden>View your result</button>
       </section>
 
@@ -115,6 +118,6 @@
       </div>
     </dialog>
 
-    <script src="./game.js?v=4"></script>
+    <script src="./game.js?v=5"></script>
   </body>
 </html>
