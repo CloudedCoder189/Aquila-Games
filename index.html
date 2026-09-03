@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Daily games and puzzles from The Aquila at University Preparatory Academy.">
     <title>Fun &amp; Games | The Aquila</title>
-    <link rel="stylesheet" href="./styles.css?v=1">
+    <link rel="stylesheet" href="./styles.css?v=2">
   </head>
   <body>
     <header class="masthead">
@@ -22,13 +22,16 @@
       <section class="intro">
         <p class="eyebrow">PUZZLES FOR THE UPA COMMUNITY</p>
         <h1>Play something new.</h1>
-        <p>Fresh challenges from The Aquila, made for quick breaks and clever minds.</p>
       </section>
 
       <section class="game-grid" aria-label="Available games">
         <a class="game-card wordle-card" href="./wordle/">
           <div class="card-art wordle-art" aria-hidden="true">
-            <span>A</span><span>Q</span><span>U</span><span>I</span><span>L</span>
+            <div class="wordle-preview">
+              <span></span><span></span><span></span><span></span><span></span>
+              <span></span><span></span><span></span><span></span><span></span>
+              <span></span><span></span><span></span><span></span><span></span>
+            </div>
           </div>
           <div class="card-copy">
             <div>
@@ -42,7 +45,7 @@
 
         <a class="game-card sudoku-card" href="./sudoku/">
           <div class="card-art sudoku-art" aria-hidden="true">
-            <span>8</span><span></span><span>3</span><span></span><span>7</span><span></span><span>5</span><span></span><span>1</span>
+            <div class="sudoku-preview" id="sudoku-preview"></div>
           </div>
           <div class="card-copy">
             <div>
@@ -69,9 +72,24 @@
         document.querySelectorAll(".game-card").forEach((card) => {
           const destination = new URL(card.href)
           destination.searchParams.set("embed", "1")
-          destination.searchParams.set("v", "6")
+          destination.searchParams.set("v", "8")
           card.href = destination
         })
+      }
+
+      const sudokuPreview = document.querySelector("#sudoku-preview")
+      const previewValues = new Map([[0, 8], [6, 3], [12, 7], [19, 4], [25, 6], [31, 5], [40, 9], [49, 2], [55, 7], [60, 1], [68, 4], [76, 6]])
+      for (let boxIndex = 0; boxIndex < 9; boxIndex += 1) {
+        const box = document.createElement("span")
+        box.className = "sudoku-box"
+        for (let cellIndex = 0; cellIndex < 9; cellIndex += 1) {
+          const row = Math.floor(boxIndex / 3) * 3 + Math.floor(cellIndex / 3)
+          const column = boxIndex % 3 * 3 + cellIndex % 3
+          const cell = document.createElement("span")
+          cell.textContent = previewValues.get(row * 9 + column) || ""
+          box.appendChild(cell)
+        }
+        sudokuPreview.appendChild(box)
       }
     </script>
   </body>
