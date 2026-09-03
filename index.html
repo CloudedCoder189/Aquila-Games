@@ -63,7 +63,16 @@
       <span>University Preparatory Academy</span>
     </footer>
     <script>
-      if (new URLSearchParams(location.search).get("embed") === "1") document.documentElement.classList.add("embed-page")
+      const parameters = new URLSearchParams(location.search)
+      if (parameters.get("embed") === "1") {
+        document.documentElement.classList.add("embed-page")
+        document.querySelectorAll(".game-card").forEach((card) => {
+          const destination = new URL(card.href)
+          destination.searchParams.set("embed", "1")
+          destination.searchParams.set("v", "4")
+          card.href = destination
+        })
+      }
     </script>
   </body>
 </html>
