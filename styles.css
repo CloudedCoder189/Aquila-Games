@@ -36,9 +36,12 @@ main { width: min(100% - 32px, 1040px); margin: 0 auto; padding: 68px 0 54px; }
 .wordle-preview span:nth-child(3), .wordle-preview span:nth-child(6) { border-color: #c9b458; background: #c9b458; }
 .wordle-preview span:nth-child(2), .wordle-preview span:nth-child(5), .wordle-preview span:nth-child(8), .wordle-preview span:nth-child(n+11) { border-color: var(--green); background: var(--green); }
 .sudoku-art { background: var(--navy); }
-.sudoku-preview { width: 144px; height: 144px; padding: 2px; display: grid; grid-template-columns: repeat(3, 1fr); grid-template-rows: repeat(3, 1fr); gap: 3px; background: var(--navy); border: 2px solid #fff; }
-.sudoku-box { display: grid; grid-template-columns: repeat(3, 1fr); grid-template-rows: repeat(3, 1fr); gap: 1px; background: #9da8c2; }
-.sudoku-box > span { display: grid; place-items: center; background: #f8f9fb; color: var(--navy); font-family: Georgia, "Times New Roman", serif; font-size: 0.62rem; font-weight: 700; }
+.sudoku-preview { width: 156px; height: 156px; display: grid; grid-template-columns: repeat(9, 1fr); grid-template-rows: repeat(9, 1fr); border: 2px solid #fff; background: #f8f9fb; }
+.sudoku-preview > span { display: grid; place-items: center; border-right: 1px solid #9da8c2; border-bottom: 1px solid #9da8c2; background: #f8f9fb; color: var(--navy); font-family: Georgia, "Times New Roman", serif; font-size: 0.62rem; font-weight: 700; line-height: 1; }
+.sudoku-preview > span:nth-child(9n) { border-right: 0; }
+.sudoku-preview > span:nth-child(n+73) { border-bottom: 0; }
+.sudoku-preview > span:nth-child(3n):not(:nth-child(9n)) { border-right: 2px solid var(--navy); }
+.sudoku-preview > span:nth-child(n+19):nth-child(-n+27), .sudoku-preview > span:nth-child(n+46):nth-child(-n+54) { border-bottom: 2px solid var(--navy); }
 .card-copy { min-height: 210px; padding: 25px 27px 24px; display: flex; flex-direction: column; justify-content: space-between; gap: 25px; }
 .card-label { margin: 0 0 8px; color: var(--green); }
 .card-copy h2 { margin: 0; font-family: Georgia, "Times New Roman", serif; font-size: 2rem; letter-spacing: -0.025em; }
