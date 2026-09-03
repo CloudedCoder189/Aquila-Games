@@ -5,15 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="The Aquila's daily Sudoku game for the UPA community.">
     <title>Aquila Sudoku | The Aquila</title>
-    <link rel="stylesheet" href="./styles.css?v=1">
+    <link rel="stylesheet" href="./styles.css?v=3">
   </head>
   <body>
     <main class="game-shell">
       <header class="masthead">
         <div class="masthead-inner">
-          <div class="brand-lockup" aria-label="The Aquila Fun and Games">
-            <span class="brand-name">THE AQUILA</span>
-            <span class="brand-divider" aria-hidden="true"></span>
+          <div class="brand-lockup" aria-label="Fun and Games">
             <span class="brand-section">FUN &amp; GAMES</span>
           </div>
           <button class="icon-button" id="help-button" type="button" aria-label="How to play">?</button>
@@ -40,7 +38,7 @@
           <span class="status-divider" aria-hidden="true"></span>
           <span id="timer">00:00</span>
           <span class="status-divider" aria-hidden="true"></span>
-          <span id="mistakes">0 mistakes</span>
+          <span id="conflicts">No conflicts</span>
         </div>
 
         <div class="board" id="board" role="grid" aria-label="Sudoku board"></div>
@@ -80,9 +78,12 @@
     <dialog class="modal" id="help-dialog">
       <button class="modal-close" type="button" aria-label="Close">×</button>
       <h2>How to play</h2>
-      <p class="modal-subtitle">Fill the grid so every row, column, and 3 × 3 box contains the numbers 1 through 9.</p>
+      <p class="modal-subtitle">Your goal is to fill every empty square with a number from 1 through 9.</p>
       <div class="help-copy">
-        <p>Select an empty square, then choose a number. Incorrect entries appear in red.</p>
+        <p><strong>The main rule:</strong> a number cannot repeat in the same row, column, or outlined 3 × 3 box.</p>
+        <p>The black numbers are clues and cannot be changed. Select an empty square, then choose the number you think belongs there.</p>
+        <p><strong>If a number turns red, it repeats a number in the same row, column, or box.</strong> Use Erase or Undo and try another number.</p>
+        <p>A guess that does not create a conflict stays normal. The game will not reveal whether it matches the hidden solution.</p>
         <p><strong>Notes</strong> lets you add small candidate numbers without committing to an answer.</p>
         <p><strong>Check</strong> tells you whether the board is on the right track. Your progress is saved automatically.</p>
         <p>Use the Easy, Medium, and Hard buttons to switch between today's three puzzles.</p>
@@ -97,11 +98,11 @@
       <p class="modal-subtitle">Nicely solved.</p>
       <div class="result-stats">
         <div><strong id="result-time"></strong><span>Time</span></div>
-        <div><strong id="result-mistakes"></strong><span>Mistakes</span></div>
+        <div><strong id="result-difficulty"></strong><span>Difficulty</span></div>
       </div>
       <button class="action-button" id="done-button" type="button">Done</button>
     </dialog>
 
-    <script src="./game.js?v=1"></script>
+    <script src="./game.js?v=3"></script>
   </body>
 </html>
