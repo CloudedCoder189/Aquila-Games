@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="The Aquila's daily Sudoku game for the UPA community.">
+    <title>Aquila Sudoku | The Aquila</title>
+    <link rel="stylesheet" href="./styles.css?v=1">
+  </head>
+  <body>
+    <main class="game-shell">
+      <header class="masthead">
+        <div class="masthead-inner">
+          <div class="brand-lockup" aria-label="The Aquila Fun and Games">
+            <span class="brand-name">THE AQUILA</span>
+            <span class="brand-divider" aria-hidden="true"></span>
+            <span class="brand-section">FUN &amp; GAMES</span>
+          </div>
+          <button class="icon-button" id="help-button" type="button" aria-label="How to play">?</button>
+        </div>
+      </header>
+
+      <section class="game-area" aria-labelledby="game-title">
+        <div class="title-row">
+          <div class="title-block">
+            <p class="edition-label">DAILY PUZZLE <span aria-hidden="true">•</span> <span id="puzzle-number"></span></p>
+            <h1 id="game-title">Aquila Sudoku</h1>
+          </div>
+          <button class="inline-help" id="embed-help-button" type="button" aria-label="How to play">?</button>
+        </div>
+
+        <div class="difficulty-tabs" role="group" aria-label="Puzzle difficulty">
+          <button type="button" data-difficulty="easy">Easy</button>
+          <button type="button" data-difficulty="medium">Medium</button>
+          <button type="button" data-difficulty="hard">Hard</button>
+        </div>
+
+        <div class="game-status" aria-label="Game status">
+          <span id="difficulty-label">Medium</span>
+          <span class="status-divider" aria-hidden="true"></span>
+          <span id="timer">00:00</span>
+          <span class="status-divider" aria-hidden="true"></span>
+          <span id="mistakes">0 mistakes</span>
+        </div>
+
+        <div class="board" id="board" role="grid" aria-label="Sudoku board"></div>
+
+        <div class="tool-row" aria-label="Puzzle tools">
+          <button class="tool-button" id="undo-button" type="button">
+            <span class="tool-icon" aria-hidden="true">↶</span>
+            <span>Undo</span>
+          </button>
+          <button class="tool-button" id="erase-button" type="button">
+            <span class="tool-icon erase-icon" aria-hidden="true">⌫</span>
+            <span>Erase</span>
+          </button>
+          <button class="tool-button" id="notes-button" type="button" aria-pressed="false">
+            <span class="tool-icon notes-icon" aria-hidden="true">✎</span>
+            <span>Notes</span>
+            <span class="notes-state" id="notes-state">Off</span>
+          </button>
+          <button class="tool-button" id="check-button" type="button">
+            <span class="tool-icon" aria-hidden="true">✓</span>
+            <span>Check</span>
+          </button>
+        </div>
+
+        <div class="number-pad" id="number-pad" aria-label="Number pad"></div>
+        <button class="view-result" id="view-result" type="button" hidden>View your result</button>
+      </section>
+
+      <footer class="site-footer">
+        <span>Made for the UPA community</span>
+        <span id="footer-puzzle"></span>
+      </footer>
+    </main>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+    <dialog class="modal" id="help-dialog">
+      <button class="modal-close" type="button" aria-label="Close">×</button>
+      <h2>How to play</h2>
+      <p class="modal-subtitle">Fill the grid so every row, column, and 3 × 3 box contains the numbers 1 through 9.</p>
+      <div class="help-copy">
+        <p>Select an empty square, then choose a number. Incorrect entries appear in red.</p>
+        <p><strong>Notes</strong> lets you add small candidate numbers without committing to an answer.</p>
+        <p><strong>Check</strong> tells you whether the board is on the right track. Your progress is saved automatically.</p>
+        <p>Use the Easy, Medium, and Hard buttons to switch between today's three puzzles.</p>
+      </div>
+    </dialog>
+
+    <dialog class="modal result-dialog" id="result-dialog">
+      <button class="modal-close" type="button" aria-label="Close">×</button>
+      <div class="result-mark" aria-hidden="true">✓</div>
+      <p class="result-kicker" id="result-kicker"></p>
+      <h2>Puzzle complete</h2>
+      <p class="modal-subtitle">Nicely solved.</p>
+      <div class="result-stats">
+        <div><strong id="result-time"></strong><span>Time</span></div>
+        <div><strong id="result-mistakes"></strong><span>Mistakes</span></div>
+      </div>
+      <button class="action-button" id="done-button" type="button">Done</button>
+    </dialog>
+
+    <script src="./game.js?v=1"></script>
+  </body>
+</html>
