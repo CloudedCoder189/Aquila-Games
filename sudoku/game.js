@@ -24,7 +24,12 @@ const numberPad = document.querySelector("#number-pad")
 const toast = document.querySelector("#toast")
 const helpDialog = document.querySelector("#help-dialog")
 const resultDialog = document.querySelector("#result-dialog")
+const clearDialog = document.querySelector("#clear-dialog")
 const viewResult = document.querySelector("#view-result")
+const toolRow = document.querySelector(".tool-row")
+const checkButton = document.querySelector("#check-button")
+const conflictDisplay = document.querySelector("#conflicts")
+const conflictDivider = document.querySelector("#conflict-divider")
 
 if (query.get("embed") === "1") {
   shell.classList.add("embed")
@@ -239,7 +244,7 @@ function getConflictCells() {
 function renderBoard() {
   board.innerHTML = ""
   const selectedValue = game.selected >= 0 ? game.values[game.selected] : 0
-  const conflicts = getConflictCells()
+  const conflicts = difficulty === "hard" ? new Set() : getConflictCells()
 
   game.values.forEach((value, cell) => {
     const button = document.createElement("button")
@@ -293,6 +298,7 @@ function renderNumberPad() {
 }
 
 function render() {
+  const hardMode = difficulty === "hard"
   renderBoard()
   renderNumberPad()
   document.querySelectorAll("[data-difficulty]").forEach((button) => {
@@ -302,12 +308,17 @@ function render() {
   })
   document.querySelector("#difficulty-label").textContent = difficulties[difficulty].label
   document.querySelector("#timer").textContent = formatTime(game.elapsed)
-  const conflictCount = [...getConflictCells()].filter((cell) => puzzle[cell] === 0).length
-  document.querySelector("#conflicts").textContent = conflictCount ? `${conflictCount} ${conflictCount === 1 ? "conflict" : "conflicts"}` : "No conflicts"
+  const conflictCount = hardMode ? 0 : [...getConflictCells()].filter((cell) => puzzle[cell] === 0).length
+  conflictDisplay.textContent = conflictCount ? `${conflictCount} ${conflictCount === 1 ? "conflict" : "conflicts"}` : "No conflicts"
+  conflictDisplay.hidden = hardMode
+  conflictDivider.hidden = hardMode
+  checkButton.hidden = hardMode
+  toolRow.classList.toggle("hard-mode", hardMode)
   document.querySelector("#notes-button").classList.toggle("active", game.notesMode)
   document.querySelector("#notes-button").setAttribute("aria-pressed", game.notesMode ? "true" : "false")
   document.querySelector("#notes-state").textContent = game.notesMode ? "On" : "Off"
   document.querySelector("#undo-button").disabled = !game.history.length || game.finished
+  document.querySelector("#clear-board-button").disabled = !hasPlayerEntries()
   viewResult.hidden = !game.finished
 }
 
@@ -343,7 +354,7 @@ function enterNumber(number) {
     game.values[cell] = number
     game.notes[cell] = []
     clearPeerNotes(cell, number)
-    if (getConflictCells().has(cell)) showToast(`${number} already appears in this row, column, or box`)
+    if (difficulty !== "hard" && getConflictCells().has(cell)) showToast(`${number} already appears in this row, column, or box`)
   }
 
   checkCompletion()
@@ -378,6 +389,7 @@ function toggleNotes() {
 }
 
 function checkBoard() {
+  if (difficulty === "hard") return
   if (game.finished) return openResult()
   const conflicts = getConflictCells()
   showToast(conflicts.size ? "Resolve the highlighted conflicts" : "No conflicts so far")
@@ -385,6 +397,28 @@ function checkBoard() {
     board.classList.remove("check-pulse")
     requestAnimationFrame(() => board.classList.add("check-pulse"))
   }
+}
+
+function hasPlayerEntries() {
+  return game.values.some((value, cell) => puzzle[cell] === 0 && value !== 0) || game.notes.some((notes) => notes.length)
+}
+
+function openClearDialog() {
+  if (!hasPlayerEntries()) return
+  clearDialog.showModal()
+}
+
+function clearAllEntries() {
+  snapshot()
+  game.values = [...puzzle]
+  game.notes = emptyNotes()
+  game.selected = puzzle.findIndex((value) => value === 0)
+  game.finished = false
+  clearDialog.close()
+  saveGame()
+  startTimer()
+  render()
+  showToast("All entries cleared")
 }
 
 function checkCompletion() {
@@ -439,7 +473,10 @@ document.querySelectorAll("[data-difficulty]").forEach((button) => button.addEve
 document.querySelector("#undo-button").addEventListener("click", undo)
 document.querySelector("#erase-button").addEventListener("click", eraseSelected)
 document.querySelector("#notes-button").addEventListener("click", toggleNotes)
-document.querySelector("#check-button").addEventListener("click", checkBoard)
+checkButton.addEventListener("click", checkBoard)
+document.querySelector("#clear-board-button").addEventListener("click", openClearDialog)
+document.querySelector("#cancel-clear-button").addEventListener("click", () => clearDialog.close())
+document.querySelector("#confirm-clear-button").addEventListener("click", clearAllEntries)
 function openHelp() {
   helpDialog.showModal()
 }
