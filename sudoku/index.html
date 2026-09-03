@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="The Aquila's daily Sudoku game for the UPA community.">
     <title>Aquila Sudoku | The Aquila</title>
-    <link rel="stylesheet" href="./styles.css?v=3">
+    <link rel="stylesheet" href="./styles.css?v=4">
   </head>
   <body>
     <main class="game-shell">
@@ -37,7 +37,7 @@
           <span id="difficulty-label">Medium</span>
           <span class="status-divider" aria-hidden="true"></span>
           <span id="timer">00:00</span>
-          <span class="status-divider" aria-hidden="true"></span>
+          <span class="status-divider" id="conflict-divider" aria-hidden="true"></span>
           <span id="conflicts">No conflicts</span>
         </div>
 
@@ -64,6 +64,7 @@
         </div>
 
         <div class="number-pad" id="number-pad" aria-label="Number pad"></div>
+        <button class="clear-board" id="clear-board-button" type="button">Clear all entries</button>
         <button class="view-result" id="view-result" type="button" hidden>View your result</button>
       </section>
 
@@ -86,6 +87,7 @@
         <p>A guess that does not create a conflict stays normal. The game will not reveal whether it matches the hidden solution.</p>
         <p><strong>Notes</strong> lets you add small candidate numbers without committing to an answer.</p>
         <p><strong>Check</strong> tells you whether the board is on the right track. Your progress is saved automatically.</p>
+        <p>Hard mode does not show conflicts or provide a Check button.</p>
         <p>Use the Easy, Medium, and Hard buttons to switch between today's three puzzles.</p>
       </div>
     </dialog>
@@ -103,6 +105,16 @@
       <button class="action-button" id="done-button" type="button">Done</button>
     </dialog>
 
-    <script src="./game.js?v=3"></script>
+    <dialog class="modal confirm-dialog" id="clear-dialog">
+      <button class="modal-close" type="button" aria-label="Close">×</button>
+      <h2>Clear all entries?</h2>
+      <p class="modal-subtitle">This removes every number and note you entered in this puzzle. The original clues will stay.</p>
+      <div class="modal-actions">
+        <button class="secondary-button" id="cancel-clear-button" type="button">Cancel</button>
+        <button class="action-button" id="confirm-clear-button" type="button">Clear entries</button>
+      </div>
+    </dialog>
+
+    <script src="./game.js?v=4"></script>
   </body>
 </html>
