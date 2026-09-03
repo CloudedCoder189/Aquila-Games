@@ -26,7 +26,6 @@ const helpDialog = document.querySelector("#help-dialog")
 const resultDialog = document.querySelector("#result-dialog")
 const clearDialog = document.querySelector("#clear-dialog")
 const viewResult = document.querySelector("#view-result")
-const toolRow = document.querySelector(".tool-row")
 const checkButton = document.querySelector("#check-button")
 const conflictDisplay = document.querySelector("#conflicts")
 const conflictDivider = document.querySelector("#conflict-divider")
@@ -312,8 +311,6 @@ function render() {
   conflictDisplay.textContent = conflictCount ? `${conflictCount} ${conflictCount === 1 ? "conflict" : "conflicts"}` : "No conflicts"
   conflictDisplay.hidden = hardMode
   conflictDivider.hidden = hardMode
-  checkButton.hidden = hardMode
-  toolRow.classList.toggle("hard-mode", hardMode)
   document.querySelector("#notes-button").classList.toggle("active", game.notesMode)
   document.querySelector("#notes-button").setAttribute("aria-pressed", game.notesMode ? "true" : "false")
   document.querySelector("#notes-state").textContent = game.notesMode ? "On" : "Off"
@@ -389,8 +386,12 @@ function toggleNotes() {
 }
 
 function checkBoard() {
-  if (difficulty === "hard") return
   if (game.finished) return openResult()
+  if (difficulty === "hard") {
+    if (game.values.some((value) => value === 0)) showToast("Fill every square before checking")
+    else showToast("The completed puzzle is not correct yet")
+    return
+  }
   const conflicts = getConflictCells()
   showToast(conflicts.size ? "Resolve the highlighted conflicts" : "No conflicts so far")
   if (conflicts.size) {
