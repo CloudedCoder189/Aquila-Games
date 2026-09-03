@@ -192,25 +192,6 @@ function openResult() {
   resultDialog.showModal()
 }
 
-async function shareResults() {
-  const grid = game.guesses.map((guess) => scoreGuess(guess).map((state) => {
-    if (state === "correct") return "🟩"
-    if (state === "present") return "🟨"
-    return "⬛"
-  }).join("")).join("\n")
-  const result = `Aquila Wordle #${puzzle.number} ${game.won ? game.guesses.length : "X"}/${rows}\n\n${grid}`
-
-  try {
-    if (navigator.share) await navigator.share({ text: result })
-    else {
-      await navigator.clipboard.writeText(result)
-      showToast("Results copied")
-    }
-  } catch (error) {
-    if (error.name !== "AbortError") showToast("Could not share results")
-  }
-}
-
 function render() {
   renderBoard()
   renderKeyboard()
@@ -227,7 +208,6 @@ document.addEventListener("keydown", (event) => {
 
 document.querySelector("#help-button").addEventListener("click", () => helpDialog.showModal())
 document.querySelectorAll(".modal-close").forEach((button) => button.addEventListener("click", () => button.closest("dialog").close()))
-document.querySelector("#share-button").addEventListener("click", shareResults)
 viewResult.addEventListener("click", openResult)
 
 render()
