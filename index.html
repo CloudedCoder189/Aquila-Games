@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Daily games and puzzles from The Aquila at University Preparatory Academy.">
     <title>Fun &amp; Games | The Aquila</title>
-    <link rel="stylesheet" href="./styles.css?v=3">
+    <link rel="stylesheet" href="./styles.css?v=4">
   </head>
   <body>
     <header class="masthead">
@@ -56,6 +56,20 @@
             <span class="play-link">Play now <span aria-hidden="true">→</span></span>
           </div>
         </a>
+
+        <a class="game-card word-search-card" href="./word-search/">
+          <div class="card-art word-search-art" aria-hidden="true">
+            <div class="word-search-preview" id="word-search-preview"></div>
+          </div>
+          <div class="card-copy">
+            <div>
+              <p class="card-label">ENDLESS THEMED PUZZLES</p>
+              <h2>Aquila Word Search</h2>
+              <p>Choose a difficulty and find every hidden word.</p>
+            </div>
+            <span class="play-link">Play now <span aria-hidden="true">→</span></span>
+          </div>
+        </a>
       </section>
 
       <p class="coming-soon">More Aquila games are coming soon.</p>
@@ -72,7 +86,7 @@
         document.querySelectorAll(".game-card").forEach((card) => {
           const destination = new URL(card.href)
           destination.searchParams.set("embed", "1")
-          destination.searchParams.set("v", "10")
+          destination.searchParams.set("v", "11")
           card.href = destination
         })
       }
@@ -84,6 +98,16 @@
         cell.textContent = previewValues.get(cellIndex) || ""
         sudokuPreview.appendChild(cell)
       }
+
+      const wordSearchPreview = document.querySelector("#word-search-preview")
+      const previewLetters = "PRESSALMTOPICNEWREPORTERCLOUDERSMEDIAXPYBYLINEQTSOURCENADRAFTHJK"
+      const previewHighlights = new Map([[0, "green"], [1, "green"], [2, "green"], [3, "green"], [4, "green"], [32, "gold"], [33, "gold"], [34, "gold"], [35, "gold"], [36, "gold"]])
+      previewLetters.split("").forEach((letter, index) => {
+        const cell = document.createElement("span")
+        cell.textContent = letter
+        if (previewHighlights.has(index)) cell.className = previewHighlights.get(index)
+        wordSearchPreview.appendChild(cell)
+      })
     </script>
   </body>
 </html>
