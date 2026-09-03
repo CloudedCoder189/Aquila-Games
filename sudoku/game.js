@@ -154,7 +154,6 @@ function defaultGame() {
     notes: emptyNotes(),
     selected: puzzle.findIndex((value) => value === 0),
     history: [],
-    mistakes: 0,
     elapsed: 0,
     notesMode: false,
     finished: false
@@ -205,9 +204,42 @@ function sameUnit(first, second) {
   )
 }
 
+function getConflictCells() {
+  const conflicts = new Set()
+  const groups = []
+
+  for (let row = 0; row < size; row += 1) groups.push(Array.from({ length: size }, (_, column) => row * size + column))
+  for (let column = 0; column < size; column += 1) groups.push(Array.from({ length: size }, (_, row) => row * size + column))
+  for (let boxRow = 0; boxRow < boxSize; boxRow += 1) {
+    for (let boxColumn = 0; boxColumn < boxSize; boxColumn += 1) {
+      groups.push(Array.from({ length: size }, (_, index) => {
+        const row = boxRow * boxSize + Math.floor(index / boxSize)
+        const column = boxColumn * boxSize + index % boxSize
+        return row * size + column
+      }))
+    }
+  }
+
+  groups.forEach((cells) => {
+    const positions = new Map()
+    cells.forEach((cell) => {
+      const value = game.values[cell]
+      if (!value) return
+      if (!positions.has(value)) positions.set(value, [])
+      positions.get(value).push(cell)
+    })
+    positions.forEach((cellsForNumber) => {
+      if (cellsForNumber.length > 1) cellsForNumber.forEach((cell) => conflicts.add(cell))
+    })
+  })
+
+  return conflicts
+}
+
 function renderBoard() {
   board.innerHTML = ""
   const selectedValue = game.selected >= 0 ? game.values[game.selected] : 0
+  const conflicts = getConflictCells()
 
   game.values.forEach((value, cell) => {
     const button = document.createElement("button")
@@ -216,7 +248,7 @@ function renderBoard() {
     if (game.selected >= 0 && sameUnit(cell, game.selected)) classes.push("related")
     if (value && selectedValue && value === selectedValue) classes.push("same")
     if (cell === game.selected) classes.push("selected")
-    if (value && puzzle[cell] === 0 && value !== solution[cell]) classes.push("incorrect")
+    if (value && conflicts.has(cell)) classes.push("incorrect")
     button.className = classes.join(" ")
     button.type = "button"
     button.dataset.cell = cell
@@ -250,7 +282,7 @@ function renderNumberPad() {
   numberPad.innerHTML = ""
   for (let number = 1; number <= 9; number += 1) {
     const button = document.createElement("button")
-    const completed = solution.every((value, cell) => value !== number || game.values[cell] === number)
+    const completed = game.values.filter((value) => value === number).length === 9
     button.className = `number-key${completed ? " complete" : ""}`
     button.type = "button"
     button.textContent = number
@@ -270,7 +302,8 @@ function render() {
   })
   document.querySelector("#difficulty-label").textContent = difficulties[difficulty].label
   document.querySelector("#timer").textContent = formatTime(game.elapsed)
-  document.querySelector("#mistakes").textContent = `${game.mistakes} ${game.mistakes === 1 ? "mistake" : "mistakes"}`
+  const conflictCount = [...getConflictCells()].filter((cell) => puzzle[cell] === 0).length
+  document.querySelector("#conflicts").textContent = conflictCount ? `${conflictCount} ${conflictCount === 1 ? "conflict" : "conflicts"}` : "No conflicts"
   document.querySelector("#notes-button").classList.toggle("active", game.notesMode)
   document.querySelector("#notes-button").setAttribute("aria-pressed", game.notesMode ? "true" : "false")
   document.querySelector("#notes-state").textContent = game.notesMode ? "On" : "Off"
@@ -287,8 +320,7 @@ function selectCell(cell) {
 function snapshot() {
   game.history.push({
     values: [...game.values],
-    notes: game.notes.map((notes) => [...notes]),
-    mistakes: game.mistakes
+    notes: game.notes.map((notes) => [...notes])
   })
   if (game.history.length > 100) game.history.shift()
 }
@@ -308,10 +340,10 @@ function enterNumber(number) {
     const notes = game.notes[cell]
     game.notes[cell] = notes.includes(number) ? notes.filter((note) => note !== number) : [...notes, number].sort()
   } else {
-    if (game.values[cell] !== number && number !== solution[cell]) game.mistakes += 1
     game.values[cell] = number
     game.notes[cell] = []
-    if (number === solution[cell]) clearPeerNotes(cell, number)
+    clearPeerNotes(cell, number)
+    if (getConflictCells().has(cell)) showToast(`${number} already appears in this row, column, or box`)
   }
 
   checkCompletion()
@@ -334,7 +366,6 @@ function undo() {
   const previous = game.history.pop()
   game.values = previous.values
   game.notes = previous.notes
-  game.mistakes = previous.mistakes
   saveGame()
   render()
 }
@@ -348,9 +379,9 @@ function toggleNotes() {
 
 function checkBoard() {
   if (game.finished) return openResult()
-  const wrong = game.values.some((value, cell) => value !== 0 && value !== solution[cell])
-  showToast(wrong ? "Some squares need another look" : "Everything looks good")
-  if (wrong) {
+  const conflicts = getConflictCells()
+  showToast(conflicts.size ? "Resolve the highlighted conflicts" : "No conflicts so far")
+  if (conflicts.size) {
     board.classList.remove("check-pulse")
     requestAnimationFrame(() => board.classList.add("check-pulse"))
   }
@@ -367,7 +398,7 @@ function checkCompletion() {
 function openResult() {
   document.querySelector("#result-kicker").textContent = `PUZZLE #${puzzleNumber} • ${difficulties[difficulty].label.toUpperCase()}`
   document.querySelector("#result-time").textContent = formatTime(game.elapsed)
-  document.querySelector("#result-mistakes").textContent = game.mistakes
+  document.querySelector("#result-difficulty").textContent = difficulties[difficulty].label
   resultDialog.showModal()
 }
 
@@ -409,9 +440,19 @@ document.querySelector("#undo-button").addEventListener("click", undo)
 document.querySelector("#erase-button").addEventListener("click", eraseSelected)
 document.querySelector("#notes-button").addEventListener("click", toggleNotes)
 document.querySelector("#check-button").addEventListener("click", checkBoard)
-document.querySelector("#help-button").addEventListener("click", () => helpDialog.showModal())
-document.querySelector("#embed-help-button").addEventListener("click", () => helpDialog.showModal())
-document.querySelectorAll(".modal-close").forEach((button) => button.addEventListener("click", () => button.closest("dialog").close()))
+function openHelp() {
+  helpDialog.showModal()
+}
+
+function closeDialog(event) {
+  const dialog = event.currentTarget.closest("dialog")
+  dialog.close()
+}
+
+document.querySelector("#help-button").addEventListener("click", openHelp)
+document.querySelector("#embed-help-button").addEventListener("click", openHelp)
+helpDialog.addEventListener("close", () => localStorage.setItem("aquila-sudoku-help-seen", "1"))
+document.querySelectorAll(".modal-close").forEach((button) => button.addEventListener("click", closeDialog))
 document.querySelector("#done-button").addEventListener("click", () => resultDialog.close())
 viewResult.addEventListener("click", openResult)
 
@@ -439,3 +480,4 @@ window.addEventListener("beforeunload", saveGame)
 loadGame()
 render()
 startTimer()
+if (!localStorage.getItem("aquila-sudoku-help-seen")) setTimeout(openHelp, 250)
