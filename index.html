@@ -72,7 +72,7 @@
         document.querySelectorAll(".game-card").forEach((card) => {
           const destination = new URL(card.href)
           destination.searchParams.set("embed", "1")
-          destination.searchParams.set("v", "9")
+          destination.searchParams.set("v", "10")
           card.href = destination
         })
       }
