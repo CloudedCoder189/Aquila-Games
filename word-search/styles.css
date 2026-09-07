@@ -49,9 +49,9 @@ button { font: inherit; }
 .new-puzzle-button:hover { background: var(--primary-soft); }
 
 .puzzle-layout { width: 100%; display: grid; grid-template-columns: minmax(0, 560px) minmax(240px, 280px); align-items: start; justify-content: center; gap: 24px; }
-.board { --size: 12; width: 100%; max-width: 560px; aspect-ratio: 1 / 1; display: grid; grid-template-columns: repeat(var(--size), minmax(0, 1fr)); grid-template-rows: repeat(var(--size), minmax(0, 1fr)); gap: 1px; padding: 2px; overflow: hidden; border: 1px solid #969d99; background: var(--grid-line); touch-action: none; user-select: none; }
+.board { --size: 12; width: 100%; max-width: 560px; aspect-ratio: 1 / 1; display: grid; grid-template-columns: repeat(var(--size), minmax(0, 1fr)); grid-template-rows: repeat(var(--size), minmax(0, 1fr)); gap: 0; padding: 0; overflow: hidden; border: 2px solid #7f8984; background: #fff; touch-action: none; user-select: none; }
 .board[data-difficulty="easy"] { width: min(100%, 500px); justify-self: center; }
-.letter-cell { min-width: 0; min-height: 0; padding: 0; display: grid; place-items: center; border: 0; background: #fff; color: #202321; font-size: clamp(0.8rem, 2.2vw, 1.2rem); font-weight: 700; line-height: 1; cursor: crosshair; user-select: none; }
+.letter-cell { min-width: 0; min-height: 0; padding: 0; display: grid; place-items: center; border: 0; border-right: 1px solid #aeb6b2; border-bottom: 1px solid #aeb6b2; background: #fff; color: #202321; font-size: clamp(0.8rem, 2.2vw, 1.2rem); font-weight: 700; line-height: 1; cursor: crosshair; user-select: none; }
 .board[data-difficulty="easy"] .letter-cell { font-size: clamp(0.95rem, 2.6vw, 1.35rem); }
 .board[data-difficulty="hard"] .letter-cell { font-size: clamp(0.7rem, 1.9vw, 1.05rem); }
 .letter-cell.preview { background: var(--gold-soft); color: #4e3b07; }
