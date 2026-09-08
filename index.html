@@ -103,8 +103,9 @@
         document.querySelectorAll(".game-card").forEach((card) => {
           const destination = new URL(card.href)
           destination.searchParams.set("embed", "1")
-          destination.searchParams.set("v", "15")
+          destination.searchParams.set("v", "16")
           card.href = destination
+          card.addEventListener("click", () => window.scrollTo({ top: 0, behavior: "auto" }))
         })
       }
 
