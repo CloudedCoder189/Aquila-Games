@@ -24,7 +24,7 @@ main { width: min(100% - 32px, 1040px); margin: 0 auto; padding: 68px 0 54px; }
 .eyebrow { margin: 0 0 12px; color: var(--green); }
 .intro h1 { margin: 0; font-family: Georgia, "Times New Roman", serif; font-size: clamp(2.7rem, 8vw, 4.8rem); line-height: 0.98; letter-spacing: -0.045em; }
 .intro > p:last-child { max-width: 560px; margin: 18px 0 0; color: var(--muted); font-size: 1.05rem; line-height: 1.55; }
-.game-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 22px; }
+.game-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 22px; }
 .game-card { min-height: 390px; display: grid; grid-template-rows: 180px 1fr; overflow: hidden; border: 1px solid var(--line); border-radius: 4px; background: var(--paper); text-decoration: none; transition: transform 160ms ease, box-shadow 160ms ease; }
 .game-card:hover { transform: translateY(-3px); box-shadow: 0 14px 38px rgb(15 27 22 / 0.1); }
 .game-card:focus-visible { outline: 3px solid var(--gold); outline-offset: 3px; }
@@ -47,6 +47,12 @@ main { width: min(100% - 32px, 1040px); margin: 0 auto; padding: 68px 0 54px; }
 .word-search-preview span { display: grid; place-items: center; background: #fff; color: #303431; font-size: 0.64rem; font-weight: 750; }
 .word-search-preview span.green { background: var(--green); color: #fff; }
 .word-search-preview span.gold { background: var(--gold); color: #fff; }
+.quizzes-art { background: #edf2ef; }
+.quizzes-preview { display: grid; justify-items: center; gap: 13px; }
+.quizzes-preview strong { width: 76px; height: 76px; display: grid; place-items: center; border: 3px solid var(--green); border-radius: 50%; background: #fff; color: var(--green); font-family: Georgia, "Times New Roman", serif; font-size: 3rem; line-height: 1; }
+.quizzes-preview div { display: grid; grid-template-columns: repeat(4, 32px); gap: 6px; }
+.quizzes-preview span { width: 32px; height: 32px; display: grid; place-items: center; border-radius: 4px; background: var(--green); color: #fff; font-size: 0.76rem; font-weight: 800; }
+.quizzes-preview span:nth-child(2) { background: var(--gold); }
 .card-copy { min-height: 210px; padding: 25px 27px 24px; display: flex; flex-direction: column; justify-content: space-between; gap: 25px; }
 .card-label { margin: 0 0 8px; color: var(--green); }
 .card-copy h2 { margin: 0; font-family: Georgia, "Times New Roman", serif; font-size: 2rem; letter-spacing: -0.025em; }
@@ -62,10 +68,6 @@ footer span:first-child { color: var(--navy); font-weight: 800; }
 .embed-page main { width: min(100% - 24px, 1040px); padding: 8px 0 20px; }
 .embed-page .intro { margin-bottom: 28px; }
 .embed-page .intro h1 { font-size: clamp(2.3rem, 7vw, 3.8rem); }
-
-@media (max-width: 950px) {
-  .game-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-}
 
 @media (max-width: 700px) {
   .masthead-inner { min-height: 58px; }
