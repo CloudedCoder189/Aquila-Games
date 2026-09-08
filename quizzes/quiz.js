@@ -1,3 +1,7 @@
+if ("scrollRestoration" in history) history.scrollRestoration = "manual"
+window.scrollTo(0, 0)
+window.addEventListener("pageshow", () => window.scrollTo(0, 0))
+
 const quizzes = {
   knowledge: {
     name: "How Well Do You Know UPA?",
