@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="UPA trivia and student personality quizzes from Aquila.">
+    <title>Aquila Quizzes</title>
+    <link rel="stylesheet" href="./styles.css?v=1">
+  </head>
+  <body>
+    <main class="quiz-shell">
+      <header class="masthead">
+        <div class="masthead-inner"><span>FUN &amp; GAMES</span></div>
+      </header>
+
+      <section class="quiz-area">
+        <section class="chooser" id="chooser" aria-labelledby="chooser-title">
+          <p class="eyebrow">CHOOSE A QUIZ</p>
+          <h1 id="chooser-title">Aquila Quizzes</h1>
+          <div class="quiz-choices">
+            <button class="quiz-choice knowledge-choice" type="button" data-start="knowledge">
+              <span class="choice-mark">10</span>
+              <span class="choice-copy">
+                <small>TRIVIA</small>
+                <strong>How Well Do You Know UPA?</strong>
+                <span>Answer 10 questions about the school, its programs and Aquila.</span>
+              </span>
+              <span class="choice-arrow" aria-hidden="true">→</span>
+            </button>
+            <button class="quiz-choice personality-choice" type="button" data-start="personality">
+              <span class="choice-mark">?</span>
+              <span class="choice-copy">
+                <small>PERSONALITY</small>
+                <strong>What Type of UPA Student Are You?</strong>
+                <span>Make 10 choices to discover your UPA student type.</span>
+              </span>
+              <span class="choice-arrow" aria-hidden="true">→</span>
+            </button>
+          </div>
+        </section>
+
+        <section class="quiz-view" id="quiz-view" hidden aria-live="polite">
+          <div class="quiz-topbar">
+            <button class="text-button" id="back-button" type="button">← All quizzes</button>
+            <span id="quiz-name"></span>
+          </div>
+          <div class="progress-track" aria-hidden="true"><span id="progress-bar"></span></div>
+          <article class="question-card">
+            <p class="question-count" id="question-count"></p>
+            <h1 id="question-text"></h1>
+            <div class="answers" id="answers"></div>
+            <button class="next-button" id="next-button" type="button" disabled>Next question</button>
+          </article>
+        </section>
+
+        <section class="result-view" id="result-view" hidden aria-live="polite">
+          <p class="eyebrow" id="result-eyebrow"></p>
+          <div class="result-mark" id="result-mark"></div>
+          <h1 id="result-title"></h1>
+          <p class="result-description" id="result-description"></p>
+          <div class="result-actions">
+            <button class="primary-button" id="restart-button" type="button">Take it again</button>
+            <button class="secondary-button" id="choose-button" type="button">Choose another quiz</button>
+          </div>
+          <p class="disclaimer" id="disclaimer" hidden>This personality quiz is just for fun.</p>
+        </section>
+      </section>
+    </main>
+    <script src="./quiz.js?v=1"></script>
+  </body>
+</html>
