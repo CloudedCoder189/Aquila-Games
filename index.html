@@ -80,9 +80,9 @@
           </div>
           <div class="card-copy">
             <div>
-              <p class="card-label">TWO UPA QUIZZES</p>
+              <p class="card-label">QUIZZES</p>
               <h2>Aquila Quizzes</h2>
-              <p>Test your UPA knowledge or discover your student type.</p>
+              <p>Try trivia, personality quizzes and more.</p>
             </div>
             <span class="play-link">Take a quiz <span aria-hidden="true">→</span></span>
           </div>
@@ -103,7 +103,7 @@
         document.querySelectorAll(".game-card").forEach((card) => {
           const destination = new URL(card.href)
           destination.searchParams.set("embed", "1")
-          destination.searchParams.set("v", "14")
+          destination.searchParams.set("v", "15")
           card.href = destination
         })
       }
