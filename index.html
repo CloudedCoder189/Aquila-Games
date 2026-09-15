@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Daily games and puzzles from The Aquila at University Preparatory Academy.">
     <title>Fun &amp; Games | The Aquila</title>
-    <link rel="stylesheet" href="./styles.css?v=6">
+    <link rel="stylesheet" href="./styles.css?v=7">
   </head>
   <body>
     <header class="masthead">
@@ -25,7 +25,7 @@
       </section>
 
       <section class="game-grid" aria-label="Available games">
-        <a class="game-card wordle-card" href="./wordle/">
+        <a class="game-card wordle-card" href="./wordle-choice/">
           <div class="card-art wordle-art" aria-hidden="true">
             <div class="wordle-preview">
               <span></span><span></span><span></span><span></span><span></span>
@@ -35,27 +35,9 @@
           </div>
           <div class="card-copy">
             <div>
-              <p class="card-label">DAILY WORD GAME</p>
+              <p class="card-label">DAILY WORD GAMES</p>
               <h2>Aquila Wordle</h2>
-              <p>Find the five-letter word in six tries.</p>
-            </div>
-            <span class="play-link">Play now <span aria-hidden="true">→</span></span>
-          </div>
-        </a>
-
-        <a class="game-card wordle-card wordle-six-card" href="./wordle-6/">
-          <div class="card-art wordle-art" aria-hidden="true">
-            <div class="wordle-preview wordle-six-preview">
-              <span></span><span></span><span></span><span></span><span></span><span></span>
-              <span></span><span></span><span></span><span></span><span></span><span></span>
-              <span></span><span></span><span></span><span></span><span></span><span></span>
-            </div>
-          </div>
-          <div class="card-copy">
-            <div>
-              <p class="card-label">DAILY WORD GAME</p>
-              <h2>Six-Letter Wordle</h2>
-              <p>Find the six-letter word in six tries.</p>
+              <p>Choose a five- or six-letter daily puzzle.</p>
             </div>
             <span class="play-link">Play now <span aria-hidden="true">→</span></span>
           </div>
@@ -121,7 +103,7 @@
         document.querySelectorAll(".game-card").forEach((card) => {
           const destination = new URL(card.href)
           destination.searchParams.set("embed", "1")
-          destination.searchParams.set("v", "17")
+          destination.searchParams.set("v", "18")
           card.href = destination
           card.addEventListener("click", () => window.scrollTo({ top: 0, behavior: "auto" }))
         })
