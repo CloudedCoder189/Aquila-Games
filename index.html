@@ -35,9 +35,9 @@
           </div>
           <div class="card-copy">
             <div>
-              <p class="card-label">DAILY WORD GAMES</p>
+              <p class="card-label">WORD GAMES</p>
               <h2>Aquila Wordle</h2>
-              <p>Choose a five- or six-letter daily puzzle.</p>
+              <p>Choose five or six letters and play as many puzzles as you want.</p>
             </div>
             <span class="play-link">Play now <span aria-hidden="true">→</span></span>
           </div>
@@ -103,7 +103,7 @@
         document.querySelectorAll(".game-card").forEach((card) => {
           const destination = new URL(card.href)
           destination.searchParams.set("embed", "1")
-          destination.searchParams.set("v", "18")
+          destination.searchParams.set("v", "19")
           card.href = destination
           card.addEventListener("click", () => window.scrollTo({ top: 0, behavior: "auto" }))
         })
