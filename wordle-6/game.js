@@ -3,15 +3,10 @@ const answers = "PLANET STREAM BRIDGE CAMERA SCHOOL BRIGHT FRIEND GARDEN SILVER 
 const rows = 6
 const columns = 6
 const keyboardRows = ["QWERTYUIOP", "ASDFGHJKL", "ZXCVBNM"]
-const today = new Date()
-const launchDay = Date.UTC(2026, 8, 15)
-const currentDay = Date.UTC(today.getFullYear(), today.getMonth(), today.getDate())
-const dayIndex = Math.max(0, Math.floor((currentDay - launchDay) / 86400000))
-const puzzle = { number: dayIndex + 1, answer: answers[dayIndex % answers.length] }
-const answer = puzzle.answer.toUpperCase()
-const storageKey = `aquila-wordle-6-${puzzle.number}`
+const storageKey = "aquila-wordle-unlimited-6"
 answers.forEach((word) => window.VALID_WORDS.add(word))
 const statePriority = { empty: 0, absent: 1, present: 2, correct: 3 }
+let answer = ""
 
 let game = {
   guesses: [],
@@ -22,10 +17,26 @@ let game = {
 
 try {
   const saved = JSON.parse(localStorage.getItem(storageKey))
-  if (saved && Array.isArray(saved.guesses)) game = saved
+  if (saved && Array.isArray(saved.guesses) && typeof saved.answer === "string" && saved.answer.length === columns) {
+    game = {
+      guesses: saved.guesses,
+      current: saved.current || "",
+      finished: Boolean(saved.finished),
+      won: Boolean(saved.won)
+    }
+    answer = saved.answer
+  }
 } catch {
   localStorage.removeItem(storageKey)
 }
+
+function pickAnswer(previous = "") {
+  let next = answers[Math.floor(Math.random() * answers.length)]
+  while (answers.length > 1 && next === previous) next = answers[Math.floor(Math.random() * answers.length)]
+  return next.toUpperCase()
+}
+
+if (!answer) answer = pickAnswer()
 
 const shell = document.querySelector(".game-shell")
 const board = document.querySelector("#board")
@@ -34,15 +45,13 @@ const toast = document.querySelector("#toast")
 const helpDialog = document.querySelector("#help-dialog")
 const resultDialog = document.querySelector("#result-dialog")
 const viewResult = document.querySelector("#view-result")
+const newPuzzleButton = document.querySelector("#new-puzzle-button")
 
 if (new URLSearchParams(location.search).get("embed") === "1") {
   shell.classList.add("embed")
   document.documentElement.classList.add("embed-page")
   document.body.classList.add("embed-page")
 }
-
-document.querySelector("#puzzle-number").textContent = `#${puzzle.number}`
-document.querySelector("#footer-puzzle").textContent = `Puzzle #${puzzle.number}`
 
 function scoreGuess(guess) {
   const result = Array(columns).fill("absent")
@@ -68,7 +77,7 @@ function scoreGuess(guess) {
 }
 
 function saveGame() {
-  localStorage.setItem(storageKey, JSON.stringify(game))
+  localStorage.setItem(storageKey, JSON.stringify({ ...game, answer }))
 }
 
 function showToast(message) {
@@ -181,7 +190,7 @@ function handleKey(key) {
 }
 
 function openResult() {
-  document.querySelector("#result-kicker").textContent = `PUZZLE #${puzzle.number}`
+  document.querySelector("#result-kicker").textContent = "SIX-LETTER WORDLE"
   document.querySelector("#result-title").textContent = game.won ? "Nicely reported." : "That was a tough one."
   document.querySelector("#result-description").innerHTML = game.won
     ? `You found it in ${game.guesses.length} ${game.guesses.length === 1 ? "guess" : "guesses"}.`
@@ -201,6 +210,15 @@ function openResult() {
   resultDialog.showModal()
 }
 
+function startNewPuzzle() {
+  answer = pickAnswer(answer)
+  game = { guesses: [], current: "", finished: false, won: false }
+  saveGame()
+  resultDialog.close()
+  render()
+  showToast("New puzzle ready")
+}
+
 function render() {
   renderBoard()
   renderKeyboard()
@@ -218,5 +236,7 @@ document.addEventListener("keydown", (event) => {
 document.querySelector("#help-button").addEventListener("click", () => helpDialog.showModal())
 document.querySelectorAll(".modal-close").forEach((button) => button.addEventListener("click", () => button.closest("dialog").close()))
 viewResult.addEventListener("click", openResult)
+newPuzzleButton.addEventListener("click", startNewPuzzle)
 
+saveGame()
 render()
