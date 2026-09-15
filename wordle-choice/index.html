@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Choose a five-letter or six-letter daily Wordle puzzle.">
+    <meta name="description" content="Choose an unlimited five-letter or six-letter Wordle puzzle.">
     <title>Choose a Wordle | Fun &amp; Games</title>
     <link rel="stylesheet" href="./styles.css?v=1">
   </head>
@@ -15,7 +15,7 @@
 
       <section class="choice-area" aria-labelledby="choice-title">
         <div class="title-block">
-          <p>DAILY WORD GAMES</p>
+          <p>WORDLE UNLIMITED</p>
           <h1 id="choice-title">Choose your Wordle.</h1>
         </div>
 
@@ -56,7 +56,7 @@
         document.querySelectorAll(".mode-card").forEach((card) => {
           const destination = new URL(card.href)
           destination.searchParams.set("embed", "1")
-          destination.searchParams.set("v", "18")
+          destination.searchParams.set("v", "19")
           card.href = destination
           card.addEventListener("click", () => window.scrollTo({ top: 0, behavior: "auto" }))
         })
