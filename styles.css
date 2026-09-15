@@ -24,8 +24,9 @@ main { width: min(100% - 32px, 1040px); margin: 0 auto; padding: 68px 0 54px; }
 .eyebrow { margin: 0 0 12px; color: var(--green); }
 .intro h1 { margin: 0; font-family: Georgia, "Times New Roman", serif; font-size: clamp(2.7rem, 8vw, 4.8rem); line-height: 0.98; letter-spacing: -0.045em; }
 .intro > p:last-child { max-width: 560px; margin: 18px 0 0; color: var(--muted); font-size: 1.05rem; line-height: 1.55; }
-.game-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 22px; }
-.game-card { min-height: 390px; display: grid; grid-template-rows: 180px 1fr; overflow: hidden; border: 1px solid var(--line); border-radius: 4px; background: var(--paper); text-decoration: none; transition: transform 160ms ease, box-shadow 160ms ease; }
+.game-grid { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 22px; }
+.game-card { grid-column: span 2; min-height: 390px; display: grid; grid-template-rows: 180px 1fr; overflow: hidden; border: 1px solid var(--line); border-radius: 4px; background: var(--paper); text-decoration: none; transition: transform 160ms ease, box-shadow 160ms ease; }
+.game-card:nth-last-child(2):nth-child(3n + 1) { grid-column: 2 / span 2; }
 .game-card:hover { transform: translateY(-3px); box-shadow: 0 14px 38px rgb(15 27 22 / 0.1); }
 .game-card:focus-visible { outline: 3px solid var(--gold); outline-offset: 3px; }
 .card-art { display: grid; place-content: center; background: var(--soft); }
@@ -35,6 +36,12 @@ main { width: min(100% - 32px, 1040px); margin: 0 auto; padding: 68px 0 54px; }
 .wordle-preview span:nth-child(1), .wordle-preview span:nth-child(4), .wordle-preview span:nth-child(7), .wordle-preview span:nth-child(9), .wordle-preview span:nth-child(10) { border-color: #787c7e; background: #787c7e; }
 .wordle-preview span:nth-child(3), .wordle-preview span:nth-child(6) { border-color: #c9b458; background: #c9b458; }
 .wordle-preview span:nth-child(2), .wordle-preview span:nth-child(5), .wordle-preview span:nth-child(8), .wordle-preview span:nth-child(n+11) { border-color: var(--green); background: var(--green); }
+.wordle-six-preview { grid-template-columns: repeat(6, 26px); }
+.wordle-six-preview span { width: 26px; height: 26px; }
+.wordle-six-preview span:nth-child(n) { border-color: #cfd3d0; background: #fff; }
+.wordle-six-preview span:nth-child(1), .wordle-six-preview span:nth-child(4), .wordle-six-preview span:nth-child(8), .wordle-six-preview span:nth-child(11) { border-color: #787c7e; background: #787c7e; }
+.wordle-six-preview span:nth-child(2), .wordle-six-preview span:nth-child(9) { border-color: #c9b458; background: #c9b458; }
+.wordle-six-preview span:nth-child(3), .wordle-six-preview span:nth-child(5), .wordle-six-preview span:nth-child(6), .wordle-six-preview span:nth-child(n+13) { border-color: var(--green); background: var(--green); }
 .sudoku-art { background: var(--navy); }
 .sudoku-preview { width: 156px; height: 156px; display: grid; grid-template-columns: repeat(9, 1fr); grid-template-rows: repeat(9, 1fr); border: 2px solid #fff; background: #f8f9fb; }
 .sudoku-preview > span { display: grid; place-items: center; border-right: 1px solid #9da8c2; border-bottom: 1px solid #9da8c2; background: #f8f9fb; color: var(--navy); font-family: Georgia, "Times New Roman", serif; font-size: 0.62rem; font-weight: 700; line-height: 1; }
@@ -77,9 +84,16 @@ footer span:first-child { color: var(--navy); font-weight: 800; }
   main { padding-top: 42px; }
   .intro { margin-bottom: 28px; }
   .game-grid { grid-template-columns: 1fr; }
+  .game-card, .game-card:nth-last-child(2):nth-child(3n + 1) { grid-column: 1; width: 100%; }
   .game-card { min-height: 350px; grid-template-rows: 155px 1fr; }
   .card-copy { min-height: 195px; }
   footer { flex-direction: column; gap: 7px; }
+}
+
+@media (min-width: 701px) and (max-width: 900px) {
+  .game-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .game-card, .game-card:nth-last-child(2):nth-child(3n + 1) { grid-column: auto; }
+  .game-card:last-child:nth-child(odd) { grid-column: 1 / -1; width: calc(50% - 11px); justify-self: center; }
 }
 
 @media (prefers-reduced-motion: reduce) {
